@@ -12,6 +12,7 @@ type Varient = "LOGIN" | "REGISTER";
 const AuthForm = () => {
   const [varient, setVarient] = useState<Varient>("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
+
   const toggleVarient = useCallback(() => {
     if (varient === "LOGIN") {
       setVarient("REGISTER");
@@ -62,26 +63,37 @@ const AuthForm = () => {
             bg-white
             px-4
             py-8
-            shadow
+            shadow-lg
             sm:rounded
             sm:px-10
         "
       >
-        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className=" main-form space-y-6"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {varient === "REGISTER" && (
-            <Input id="name" label="Name" register={register} errors={errors} />
+            <Input
+              id="name"
+              label="Name"
+              register={register}
+              errors={errors}
+              disabled={isLoading}
+            />
           )}
           <Input
             id="email"
             label="Email Address"
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <Input
             id="password"
             label="Password"
             register={register}
             errors={errors}
+            disabled={isLoading}
           />
           <Button
             className="
@@ -96,7 +108,7 @@ const AuthForm = () => {
             {varient === "LOGIN" ? "Sign In" : "Register"}
           </Button>
         </form>
-        <div className=" mt-6 ">
+        <div className=" seperator-line mt-6 ">
           <div className="relative">
             <div className=" flex items-center absolute inset-0">
               <div className=" w-full border-t border-gray-300" />
@@ -108,7 +120,7 @@ const AuthForm = () => {
             </div>
           </div>
         </div>
-        <div className=" flex space-x-4">
+        <div className="social-auth flex space-x-4">
           <AddSocialAuth
             icon={BsGoogle}
             onClick={() => socialAction("google")}
@@ -117,6 +129,20 @@ const AuthForm = () => {
             icon={BsGithub}
             onClick={() => socialAction("github")}
           />
+        </div>
+        <div className=" flex justify-center text-center mt-6 text-gray-700">
+          <div>
+            <button>
+              {varient === "LOGIN"
+                ? "New to ChitChat?"
+                : "Already have account?"}
+            </button>
+          </div>
+          <div className=" pl-1">
+            <button className=" underline" onClick={toggleVarient}>
+              {varient === "LOGIN" ? "Create Account" : "LogIn"}
+            </button>
+          </div>
         </div>
       </div>
     </div>
