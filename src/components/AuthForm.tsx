@@ -4,6 +4,8 @@ import React, { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "./Input";
 import { Button } from "./ui/button";
+import { BsGithub, BsGoogle } from "react-icons/bs";
+import AddSocialAuth from "./AddSocialAuth";
 
 type Varient = "LOGIN" | "REGISTER";
 
@@ -52,7 +54,8 @@ const AuthForm = () => {
       className=" 
         mt-8
         w-full
-        sm:max-w-md"
+        sm:max-w-md
+        text-zinc-900"
     >
       <div
         className=" 
@@ -105,7 +108,16 @@ const AuthForm = () => {
             </div>
           </div>
         </div>
-        {/* <AddSocialAuth /> */}
+        <div className=" flex space-x-4">
+          <AddSocialAuth
+            icon={BsGoogle}
+            onClick={() => socialAction("google")}
+          />
+          <AddSocialAuth
+            icon={BsGithub}
+            onClick={() => socialAction("github")}
+          />
+        </div>
       </div>
     </div>
   );
