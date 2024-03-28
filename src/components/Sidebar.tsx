@@ -1,9 +1,9 @@
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import React from "react";
-import Nightmode from "../../public/images/Nightmode";
-import Daymode from "../../public/images/Daymode";
-import CreateChat from "../../public/images/CreateChat";
+import Nightmode from "./icons/Nightmode";
+import Daymode from "./icons/Daymode";
+import CreateChat from "./icons/CreateChat";
 import { ModeToggle } from "./ModeToggle";
 import SearchBar from "./SearchBar";
 import HeaderSection from "./HeaderSection";
