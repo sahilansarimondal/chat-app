@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Session from "@/components/Session";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 
@@ -28,9 +29,11 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="light">
-          {children}
-        </ThemeProvider>
+        <Session>
+          <ThemeProvider attribute="class" defaultTheme="light">
+            {children}
+          </ThemeProvider>
+        </Session>
       </body>
     </html>
   );

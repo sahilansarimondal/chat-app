@@ -24,7 +24,8 @@ const AddSocialAuth: React.FC<AddSocialAuthProps> = ({
       p-2 
       border-gray-300 
       shadow-inner 
-      mt-4 hover:shadow-lg hover:border-gray-400"
+      mt-4 hover:shadow-lg 
+      hover:border-gray-400"
     >
       <Icon />
     </button>
