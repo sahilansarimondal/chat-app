@@ -1,4 +1,3 @@
-import Image from "next/image";
 import ChatLogo from "@/components/icons/ChatLogo";
 import AuthForm from "@/components/AuthForm";
 

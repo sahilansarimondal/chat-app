@@ -108,7 +108,7 @@ const AuthForm = () => {
             {varient === "LOGIN" ? "Sign In" : "Register"}
           </Button>
         </form>
-        <div className=" seperator-line mt-6 ">
+        <div className="Input-field seperator-line mt-6 ">
           <div className="relative">
             <div className=" flex items-center absolute inset-0">
               <div className=" w-full border-t border-gray-300" />
@@ -130,7 +130,7 @@ const AuthForm = () => {
             onClick={() => socialAction("github")}
           />
         </div>
-        <div className=" flex justify-center text-center mt-6 text-gray-700">
+        <div className="devider-section flex justify-center text-center mt-6 text-gray-700">
           <div>
             <button>
               {varient === "LOGIN"
