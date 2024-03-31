@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import React, { useCallback, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "./Input";
@@ -38,6 +39,7 @@ const AuthForm = () => {
 
     if (varient === "REGISTER") {
       // axios register
+      const response = axios.post("/api/register", data);
     }
 
     if (varient === "LOGIN") {
