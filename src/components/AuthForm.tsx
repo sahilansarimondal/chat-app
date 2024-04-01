@@ -7,10 +7,14 @@ import Input from "./Input";
 import { Button } from "./ui/button";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import AddSocialAuth from "./AddSocialAuth";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 type Varient = "LOGIN" | "REGISTER";
 
 const AuthForm = () => {
+  const router = useRouter();
   const [varient, setVarient] = useState<Varient>("LOGIN");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -34,16 +38,38 @@ const AuthForm = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
     if (varient === "REGISTER") {
       // axios register
-      const response = axios.post("/api/register", data);
+      const response = await axios.post("/api/register", data);
+
+      console.log(response.data);
+
+      if (response.data.user) {
+        toast.success("Register Successful");
+        router.push("/chat");
+      } else {
+        toast.error(response.data.message);
+      }
+
+      setIsLoading(false);
     }
 
     if (varient === "LOGIN") {
       // Nextauth login
+      signIn("credentials", { ...data, redirect: false })
+        .then((callback) => {
+          if (callback?.error) {
+            toast.error(callback.error);
+          }
+          if (callback?.ok && !callback?.error) {
+            toast.success("Login Successful");
+            router.push("/chat");
+          }
+        })
+        .finally(() => setIsLoading(false));
     }
   };
 

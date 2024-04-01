@@ -1,22 +1,41 @@
+import prisma from "@/lib/prisma";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import bcrypt from "bcryptjs";
 
 const handler = NextAuth({
   providers: [
     Credentials({
       name: "Credentials",
       credentials: {
-        name: { label: "Name", type: "text" },
         email: { label: "Email", type: "text", placeholder: "example@ex.com" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const value = req.body;
+        if (!credentials) throw new Error("Invalid credentials");
 
-        console.log({ value: value, credentials: credentials });
+        const { email, password } = credentials;
 
-        return null;
+        const user = await prisma.user.findUnique({
+          where: {
+            email,
+          },
+        });
+
+        if (!user) {
+          throw new Error("Invalid credentials");
+        } else {
+          const isValidPassword = await bcrypt.compare(password, user.password);
+
+          if (!isValidPassword) throw new Error("Invalid credentials");
+        }
+
+        return {
+          id: JSON.stringify(user.id),
+          name: user?.name,
+          email: user.email,
+        };
       },
     }),
     GoogleProvider({
@@ -25,9 +44,9 @@ const handler = NextAuth({
     }),
   ],
   pages: {
-    signIn: "/signin",
-    newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
+    signIn: "/auth/signin",
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };

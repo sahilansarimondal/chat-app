@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Session from "@/components/Session";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
-
+import { Toaster } from "react-hot-toast";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -32,6 +32,7 @@ export default function RootLayout({
         <Session>
           <ThemeProvider attribute="class" defaultTheme="light">
             {children}
+            <Toaster position="bottom-right" />
           </ThemeProvider>
         </Session>
       </body>
